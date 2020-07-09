@@ -1,42 +1,53 @@
 package com.qqapps.flutter_methodchannel_test
 
-import android.widget.TextView
 import androidx.annotation.NonNull
 import com.qqapps.flutter_methodchannel_test.HebrewDate.HebrewDate
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
+import java.text.DateFormat
+
+import java.text.SimpleDateFormat
+
+import java.util.Calendar
+
+import java.util.Date
 
 
 class MainActivity : FlutterActivity() {
 
-    private val jodesh: String? = null
-    private val yom = 0
-    private val shana = 0
-    private val yomview: String? = null
-
-
+    private var jodesh: String? = null
+    private var yom = 0
+    private var shana = 0
+    private var yomview: String? = null
 
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
 
         val date = HebrewDate()
-        if (yomview != null) {
-            val yomview = date.getHebrewDateAsString()
-        }
+        yom = HebrewDate.CURRENT_HDAY
+        jodesh = HebrewDate.CURRENT_HMONTH
+        shana = HebrewDate.CURRENT_HYEAR
+        println("esto deberia ser la fecha")
+        println(date)
+        println(yom)
+        println(jodesh)
+        println(shana)
+        println("*************************")
         
-        
+
         MethodChannel(flutterEngine.dartExecutor, "flutter/MethodChannelDemo").setMethodCallHandler { call, result ->
             if (call.method == "Documents") {
                 val name = call.arguments as String
-                result.success(sayHello(yomview.toString()))
-                
+                result.success(sayHello(date.toString()))
+
             }
         }
     }
+
     fun sayHello(name: String): String {
-        return "Hi $name from Android"
+        return "The date $name came from Android"
     }
 }

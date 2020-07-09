@@ -53,10 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _getDocuments() async {
     String response;
     MethodChannel _methodChannel = MethodChannel('flutter/MethodChannelDemo');
-//    List<dynamic> documentList = [""];
+
     try {
       response = await _methodChannel.invokeMethod("Documents", "Flutter");
-//      documentList = await _methodChannel.invokeMethod("Documents", "Flutter");
     } on Exception catch (e) {
       response = 'No answer';
       print("exception " + e.toString());
@@ -65,8 +64,5 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _message = response;
     });
-//    documentList.forEach((document) {
-//      print("Document: $document"); // seach in Logcat "Document"
-//    });
   }
 }
