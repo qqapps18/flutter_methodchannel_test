@@ -43,7 +43,7 @@ class MainActivity : FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor, "flutter/MethodChannelDemo").setMethodCallHandler { call, result ->
             if (call.method == "Documents") {
                 val name = call.arguments as String
-                result.success(sayHello(yom.toString()))
+                result.success(sayHello(date.toString()))
 
             }
         }
