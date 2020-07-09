@@ -27,6 +27,7 @@ class MainActivity : FlutterActivity() {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
 
         val date = HebrewDate()
+        yomview = date.getHebrewDateAsString()
         yom = HebrewDate.CURRENT_HDAY
         jodesh = HebrewDate.CURRENT_HMONTH
         shana = HebrewDate.CURRENT_HYEAR
@@ -35,13 +36,14 @@ class MainActivity : FlutterActivity() {
         println(yom)
         println(jodesh)
         println(shana)
+        println(yomview)
         println("*************************")
-        
+
 
         MethodChannel(flutterEngine.dartExecutor, "flutter/MethodChannelDemo").setMethodCallHandler { call, result ->
             if (call.method == "Documents") {
                 val name = call.arguments as String
-                result.success(sayHello(date.toString()))
+                result.success(sayHello(yom.toString()))
 
             }
         }

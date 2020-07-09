@@ -6,7 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,10 +51,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getDocuments() async {
     String response;
+    List responseList;
     MethodChannel _methodChannel = MethodChannel('flutter/MethodChannelDemo');
 
     try {
       response = await _methodChannel.invokeMethod("Documents", "Flutter");
+//***************************************************
+//   viendo la manera de pasar mas de un dato de ida y vuetal
+//
+//      responseList =
+//      (await _methodChannel.invokeListMethod('Documents', 'yom', 'jodesh');
+
+//****************************************************
     } on Exception catch (e) {
       response = 'No answer';
       print("exception " + e.toString());
@@ -66,3 +73,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 }
+
+//   estructura de datos a utilizar para recibir la informacion
+//class Hdate {
+//  Hdate(this.yom, this.jodesh, this.shana, this.yomView, this.isLeapYear);
+//
+//  int yom;
+//  String jodesh;
+//  int shana;
+//  String yomView;
+//  bool isLeapYear;
+//}
