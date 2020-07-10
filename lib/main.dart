@@ -51,16 +51,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getDocuments() async {
     String response;
-    List responseList;
+    List<String> responseList = List(4);
+
     MethodChannel _methodChannel = MethodChannel('flutter/MethodChannelDemo');
 
     try {
-      response = await _methodChannel.invokeMethod("Documents", "Flutter");
+//      response = await _methodChannel.invokeMethod("Documents", "Flutter");
 //***************************************************
 //   viendo la manera de pasar mas de un dato de ida y vuetal
-//
-//      responseList =
-//      (await _methodChannel.invokeListMethod('Documents', 'yom', 'jodesh');
+
+      responseList = (await _methodChannel.invokeListMethod<String>(
+          'Documents', responseList));
+
+//      'Documents', ['yom', 'jodesh', 'shana', 'yomView']));
 
 //****************************************************
     } on Exception catch (e) {
@@ -69,18 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     setState(() {
-      _message = response;
+      _message = responseList[3];
     });
   }
 }
-
-//   estructura de datos a utilizar para recibir la informacion
-//class Hdate {
-//  Hdate(this.yom, this.jodesh, this.shana, this.yomView, this.isLeapYear);
-//
-//  int yom;
-//  String jodesh;
-//  int shana;
-//  String yomView;
-//  bool isLeapYear;
-//}

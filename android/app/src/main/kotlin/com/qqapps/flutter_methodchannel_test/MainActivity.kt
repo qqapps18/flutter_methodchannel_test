@@ -6,13 +6,6 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
-import java.text.DateFormat
-
-import java.text.SimpleDateFormat
-
-import java.util.Calendar
-
-import java.util.Date
 
 
 class MainActivity : FlutterActivity() {
@@ -21,6 +14,9 @@ class MainActivity : FlutterActivity() {
     private var yom = 0
     private var shana = 0
     private var yomview: String? = null
+    var listdates = Array<String> (4) {""}
+    var name = Array<String> (4) {""}
+
 
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
@@ -39,17 +35,37 @@ class MainActivity : FlutterActivity() {
         println(yomview)
         println("*************************")
 
+        listdates[0] = yom.toString()
+        listdates[1] = jodesh.toString()
+        listdates[2] = shana.toString()
+        listdates[3] = yomview.toString()
+
+        for (element in listdates) {
+            println(element)
+        }
+
+
+
 
         MethodChannel(flutterEngine.dartExecutor, "flutter/MethodChannelDemo").setMethodCallHandler { call, result ->
             if (call.method == "Documents") {
-                val name = call.arguments as String
-                result.success(sayHello(date.toString()))
+                name = call.arguments as Array<String>
+/*                result.success(sayHello(name))*/
+                result.success(return@setMethodCallHandler)
 
             }
         }
     }
 
-    fun sayHello(name: String): String {
-        return "The date $name came from Android"
+    private fun sayHello(name: Array<String>): Array<String> {
+        name[0] = listdates[0]
+        name[1] = listdates[1]
+        name[2] = listdates[2]
+        name[3] = listdates[3]
+         for (element in name) {
+            println(element)
+        }
+        return this.name
+
     }
 }
