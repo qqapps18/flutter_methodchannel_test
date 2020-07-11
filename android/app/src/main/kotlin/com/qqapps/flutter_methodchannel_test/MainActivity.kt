@@ -14,13 +14,14 @@ class MainActivity : FlutterActivity() {
     private var yom = 0
     private var shana = 0
     private var yomview: String? = null
-    var listdates = Array<String> (4) {""}
-    var name = Array<String> (4) {""}
+    var listdates: MutableList<String> = mutableListOf<String>()
+    var name: MutableList<String> = mutableListOf<String>()
 
 
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
-        GeneratedPluginRegistrant.registerWith(flutterEngine);
+        super.configureFlutterEngine(flutterEngine)
+        GeneratedPluginRegistrant.registerWith(flutterEngine)
 
         val date = HebrewDate()
         yomview = date.getHebrewDateAsString()
@@ -35,33 +36,29 @@ class MainActivity : FlutterActivity() {
         println(yomview)
         println("*************************")
 
-        listdates[0] = yom.toString()
-        listdates[1] = jodesh.toString()
-        listdates[2] = shana.toString()
-        listdates[3] = yomview.toString()
+        listdates.add(yom.toString())
+        listdates.add(jodesh.toString())
+        listdates.add(shana.toString())
+        listdates.add(yomview.toString())
 
         for (element in listdates) {
             println(element)
         }
 
-
-
-
-        MethodChannel(flutterEngine.dartExecutor, "flutter/MethodChannelDemo").setMethodCallHandler { call, result ->
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "flutter/MethodChannelDemo").setMethodCallHandler { call, result ->
             if (call.method == "Documents") {
-                name = call.arguments as Array<String>
-/*                result.success(sayHello(name))*/
-                result.success(return@setMethodCallHandler)
-
+                result.success(listdates)
+            } else {
+                result.notImplemented()
             }
         }
     }
 
-    private fun sayHello(name: Array<String>): Array<String> {
-        name[0] = listdates[0]
-        name[1] = listdates[1]
-        name[2] = listdates[2]
-        name[3] = listdates[3]
+    private fun sayHello(name: MutableList<String>): MutableList<String> {
+        name.add(listdates[0])
+        name.add(listdates[1])
+        name.add(listdates[2])
+        name.add(listdates[3])
          for (element in name) {
             println(element)
         }

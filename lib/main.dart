@@ -57,11 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     try {
 //      response = await _methodChannel.invokeMethod("Documents", "Flutter");
+      List<dynamic> listResult = await _methodChannel.invokeMethod("Documents");
+      print("Result: " + listResult.cast<String>().toString());
 //***************************************************
 //   viendo la manera de pasar mas de un dato de ida y vuetal
 
-      responseList = (await _methodChannel.invokeListMethod<String>(
-          'Documents', responseList));
+//      responseList = (await _methodChannel.invokeListMethod<String>(
+//          'Documents', responseList));
 
 //      'Documents', ['yom', 'jodesh', 'shana', 'yomView']));
 
